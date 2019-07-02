@@ -1,3 +1,11 @@
+###model=1 BRCBD Design
+####model=2 Lattice
+####biplot= 0 and 1 modelo AMMI 1(O style different that 1)
+####biplot=2 and 3 modelo AMMMI2  cp1 and cp2 (2 style different that 3)
+
+#AMMI(Block,Enviroment,Repetition,Entry,y,model=1 or 2,biplot= 0, 1,2, or 3)
+#we have not blocks :
+##AMMI(NULL,Enviroment,Repetition,Entry,y,model=1 or 2,biplot= 0, 1,2, or 3)
 
 
 library(dplyr)
@@ -5,15 +13,9 @@ library(agricolae)
 
 fm <- read.csv("Dat.csv",head=T)
 
-
-###model=1 BRCBD Design
-####model=2 Lattice
-####biplot= 0 and 1 modelo AMMI 1(O style different that 1)
-####biplot=2 and 3 modelo AMMMI2  cp1 and cp2 (2 style different that 3)
-
-
-
 ###Example 1 without Blocks (BRCBD) model=1
+
+
 
 Ex1<- AMMI(NULL,plrv$Locality,plrv$Rep, plrv$Genotype,plrv$Yield,model = 1,biplot = 2)
 Ex1$ANOVA_PC
