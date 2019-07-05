@@ -1,7 +1,7 @@
 ######## MODEL AMMI AND SREG 
 
 ###method=AMMI
-###method=2SREG
+###method=SREG
 ###model=1 RCBD Design
 ####model=2 Lattice
 ####biplot= 0 and 1 plot x=yield, y=PC1 (1 style differente that 0)
