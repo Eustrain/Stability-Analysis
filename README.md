@@ -11,12 +11,12 @@
 
 
 ## Function IGE 
- The function estimate the AMMI and SREG analysis
- out AMMI= ANOVA, AMMI ANOVA, PC ANOVA, ASV (AMMI STABILITY VALUE),MEANS and PC1 and PC2 
- out SREG= ANOVA, AMMI ANOVA, PC ANOVA,MEANS and PC1 and PC2 
+###### The function estimate the AMMI and SREG analysis
+###### out AMMI= ANOVA, AMMI ANOVA, PC ANOVA, ASV (AMMI STABILITY VALUE),MEANS and PC1 and PC2 
+###### out SREG= ANOVA, AMMI ANOVA, PC ANOVA,MEANS and PC1 and PC2 
  
- Method= "AMMI", "SREG"
- model=1 RCBD Design
- model=2 Lattice
- biplot= 0 and 1 plot x=yield, y=PC1 (1 style differente that 0)
- biplot=2 and 3  plot x=CP1 and y=CP2 (2 style different that 3)
+###### Method= "AMMI", "SREG"
+###### model=1 RCBD Design
+###### model=2 Lattice
+###### biplot= 0 and 1 plot x=yield, y=PC1 (1 style differente that 0)
+###### biplot=2 and 3  plot x=CP1 and y=CP2 (2 style different that 3)
