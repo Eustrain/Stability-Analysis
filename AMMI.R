@@ -1,11 +1,16 @@
-###model=1 BRCBD Design
-####model=2 Lattice
-####biplot= 0 and 1 modelo AMMI 1(O style different that 1)
-####biplot=2 and 3 modelo AMMMI2  cp1 and cp2 (2 style different that 3)
+######## MODEL AMMI AND SREG 
 
-#AMMI(Block,Enviroment,Repetition,Entry,y,model=1 or 2,biplot= 0, 1,2, or 3)
+###method=AMMI
+###method=2SREG
+###model=1 RCBD Design
+####model=2 Lattice
+####biplot= 0 and 1 plot x=yield, y=PC1 (1 style differente that 0)
+####biplot=2 and 3  plot x=CP1 and y=CP2 (2 style different that 3)
+
+#IGE(Block,Enviroment,Repetition,Entry,y,method="AMMI",model=1 or 2,biplot= 0, 1,2, or 3)
+
 #we have not blocks :
-##AMMI(NULL,Enviroment,Repetition,Entry,y,model=1 or 2,biplot= 0, 1,2, or 3)
+##IGE(NULL,Enviroment,Repetition,Entry,y,method="SREG",model=1 or 2,biplot= 0, 1,2, or 3)
 
 
 library(dplyr)
@@ -14,20 +19,24 @@ library(agricolae)
 fm <- read.csv("Dat.csv",head=T)
 
 ###Example 1 without Blocks (BRCBD) model=1
+data("plrv")
 
 
-
-Ex1<- AMMI(NULL,plrv$Locality,plrv$Rep, plrv$Genotype,plrv$Yield,model = 1,biplot = 2)
-Ex1$ANOVA_PC
+Ex1<- IGE(NULL,plrv$Locality,plrv$Rep, plrv$Genotype,plrv$Yield,method = "AMMI",model = 2,biplot = 2)
 
 
+###Example 2 with Blocks (Lattice), model=2  and SREG
 
-###Example 2 with Blocks (Lattice), model=2 
+Ex2<- IGE(Block = fm$BLOCK,fm$env,fm$rep,fm$entry,fm$y,method="SREG",model = 2,biplot =1)
 
-Ex2<- AMM(Block = fm$BLOCK,fm$env,fm$rep,fm$geno,fm$y,model = 2,biplot =0)
+tab1 <- cbind(Ex2$Means_Entry,Ex2$PC_Entry[,2])
+cor(tab1$MEDIA,tab1$`Ex2$PC_Entry[, 2]`)
 
+####The correlation between CP1 and Yield is high, then we can
+### interpret PC1 like yield and PC2 like the effect of IGE
+### a genotype with high value in CP1 and low value in CP2 is ideal
 
-AMMI <- function(Block=NULL,Env,Rep,Entry,y,model=c(1,2),biplot = c(0,1,2,3)){
+IGE <- function(Block=NULL,Env,Rep,Entry,y,method = c("AMMI", "SREG"),model=c(1,2),biplot = c(0,1,2,3)){
 
   
   
@@ -39,6 +48,12 @@ Loc <- as.factor(Env)
 Rep <- as.factor(Rep)
 Entry <- as.factor(Entry)
 y <- as.numeric(y)
+######################################################
+Entry_names<- levels(Entry)
+Loc_names <- levels(Loc)
+Entry.num <- length(Entry_names)
+Loc.num <- length(Loc_names)
+nrep <- length(levels(Rep))
 #######################################################
 ######### Statistics#################################
 overall.mean <- mean(y)
@@ -53,20 +68,23 @@ else if( model==2){
 m1<- aov(y~Entry+Rep:Loc+Block:Rep:Loc+Entry:Loc+Loc)######Lattice
 anv1 <- anova(m1)
 }
-##################Estimate of  IGA values
-
+##################AMMI
+if(method=="AMMI"){
 geno_env <- model.tables(m1, type = "effects", cterms = "Entry:Loc")
-igenoxenv <- geno_env$tables$`Entry:Loc`
+z<- geno_env$tables$`Entry:Loc`
+}
+##################SREG
 
+else if( method =="SREG"){
+A <- tapply(y, list(Entry, Loc), mean, na.rm = TRUE)
+env.mean <- apply(A, 2, mean)
+z <- t(t(A) - env.mean)
+}
 ############################################################
-Entry_names<- levels(Entry)
-Loc_names <- levels(Loc)
-Entry.num <- length(Entry_names)
-Loc.num <- length(Loc_names)
-nrep <- length(levels(Rep))
+
 ############Descomposition of values singulars
 
-DVS <- svd(igenoxenv)
+DVS <- svd(z)
 D <- diag(DVS$d)
 U <- DVS$u %*%sqrt(D)
 V <- DVS$v %*%sqrt(D)
@@ -87,7 +105,7 @@ residual.DF <- m1$df.residual
 residual.MS <- residual.SS/residual.DF 
 
 ####################Sum Square PC`S##########
-int.SS <- (t(as.vector(igenoxenv)) %*% as.vector(igenoxenv))*nrep
+int.SS <- (t(as.vector(z)) %*% as.vector(z))*nrep
 
 PC.SS <- DVS$d[1:PC]^2*nrep
 PC.SS <- round(PC.SS,4)
@@ -204,6 +222,8 @@ for (i in 1:Loc.num){  #    enviroment
 Means<- as.data.frame(Entry.mean)
 Loc_means <- as.data.frame(Loc.mean)
 ##########ASV
+
+if( method=="AMMI"){
 P.C_GEN <- round(U[,1:2],5)
 P <-PC.SS[1]/PC.SS[2]
 ASV <- round(sqrt(P*(P.C_GEN[,1])^2+(P.C_GEN[,2])^2),4)
@@ -211,10 +231,23 @@ rk_asv<-rank(ASV)
 tab_out <-data.frame("Entry"=Entry_names,"MEDIA"=Means$Entry.mean,
                      "ASV"=ASV,"Rank ASV"=rk_asv)
 
+}
+
+
+else if(method=="SREG"){
+
+tab_out <-data.frame("Entry"=Entry_names,"MEDIA"=Means$Entry.mean)
+}
+
+Entry_PC <- U[,1:2]
+Loc_PC <- V[,1:2]
+
+PC_Entry <- data.frame("Entry"=Entry_names,"CP1"=Entry_PC[,1],"PC2"=Entry_PC[,2])
+PC_ENV <- data.frame("Env"=Loc_names,"CP1"=Loc_PC[,1],"PC2"=Loc_PC[,2])
 ##########################
     
 result <-list(ANOVA=anv1,ANOVA_AMMI=tab_anv,ANOVA_PC=PC_aov,Means_Entry=tab_out,
-              Means_Loc=Loc_means)
+              Means_Loc=Loc_means,PC_Entry=PC_Entry,PC_ENV=PC_ENV)
 return(result) 
 }
 
