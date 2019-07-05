@@ -11,7 +11,7 @@
 
 
 ## Function IGE 
-###### The function estimate the AMMI and SREG analysis
+###### The function perform the AMMI and SREG analysis
 ###### out AMMI= ANOVA, AMMI ANOVA, PC ANOVA, ASV (AMMI STABILITY VALUE),MEANS and PC1 and PC2 
 ###### out SREG= ANOVA, AMMI ANOVA, PC ANOVA,MEANS and PC1 and PC2 
  
