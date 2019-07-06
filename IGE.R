@@ -22,8 +22,8 @@ fm <- read.csv("Dat.csv",head=T)
 data("plrv")
 
 
-Ex1<- IGE(NULL,plrv$Locality,plrv$Rep, plrv$Genotype,plrv$Yield,method = "AMMI",model = 2,biplot = 2)
-
+Ex1<- IGE(NULL,plrv$Locality,plrv$Rep, plrv$Genotype,plrv$Yield,method = "AMMI",model = 1,biplot = 2)
+Ex1$ANOVA_PC
 
 ###Example 2 with Blocks (Lattice), model=2  and SREG
 
@@ -132,24 +132,23 @@ anv_gl <- c(anv1$Df[1],anv1$Df[2],anv1$Df[4])
 anv_ss <- c(anv1$`Sum Sq`[1],anv1$`Sum Sq`[2],anv1$`Sum Sq`[4] )
 anv_ms <- c(anv1$`Mean Sq`[1],anv1$`Mean Sq`[2],iga_ms <- anv1$`Mean Sq`[4])
 anv_f <- c(anv1$`Pr(>F)`[1],anv1$`Pr(>F)`[2],anv1$`Pr(>F)`[4])
-effec <-c("GEN","ENV","ENV*GEN") 
 anv.count <- anv_ss / sum(anv_ss) * 100
 anv.acom <- cumsum(anv.count)
 ftab <- c(anv1$`F value`[1],anv1$`F value`[2],anv1$`F value`[4])
-tab_anv <- data.frame(Effect=effec,SS=anv_ss,PORCENT=anv.count,ACOMULATED=anv.acom
-                      ,DF=anv_gl,MS=anv_ms,F=ftab,Prob=anv_f)
-
-
+tab_anv <- data.frame(`SS`=anv_ss,`PORCENT`=anv.count,`ACOMULATED`=anv.acom
+                      ,`DF`=anv_gl,`MS`=anv_ms,`F`=ftab,`Pr(>F)`=anv_f,check.names=FALSE)
+rownames(tab_anv) <- c("GEN","ENV","ENV*GEN")
+class(tab_anv) <- c("anova","data.frame")
 
 #######################Result PC`S####################
 PC.count <- round(PC.count,5)
 PC.acum <- round(PC.acum,5)
 Porcent_pc<- c(PC.count,"Residuals")
 Acum_pc <- c(PC.acum,"Residuals")
-PC_aov<- data.frame(Effect = rowlab, SS = PC.SS,PORCENT=Porcent_pc,ACOMULATED=Acum_pc,
-                         DF = PC.DF, MS = MS, F = F, Pr.F = probab)
-
-
+PC_aov<- data.frame (`SS` = PC.SS,`PORCENT`=Porcent_pc,`ACOMULATED`=Acum_pc,
+                     `DF` = PC.DF, `MS` = MS, `F` = F, `Pr(>F)` = probab,check.names=FALSE)
+rownames(PC_aov) <- c(rowlab)
+class(PC_aov) <- c("anova","data.frame")
 
 ###############Plot AMMI model AMMI1
 if(biplot== 0){
@@ -232,7 +231,6 @@ tab_out <-data.frame("Entry"=Entry_names,"MEDIA"=Means$Entry.mean,
                      "ASV"=ASV,"Rank ASV"=rk_asv)
 
 }
-
 
 else if(method=="SREG"){
 
