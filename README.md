@@ -26,3 +26,6 @@
 
 ###### The function perform the Eberhart and Russell stability analysis 
 ##### Eberhart and Russell Model of stability, Crop Science 1966, 6:37-40
+
+## Function  Finlay and Wilkinson's Model
+##### The function perform the Regression Analysis of Stability (Finlay and Wilkinson's Model)
