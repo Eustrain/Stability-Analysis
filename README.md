@@ -20,3 +20,9 @@
 ###### model=2 Lattice
 ###### biplot= 0 and 1 plot x=yield, y=PC1 (1 style differente that 0)
 ###### biplot=2 and 3  plot x=CP1 and y=CP2 (2 style different that 3)
+
+
+## Function Eberhart and Russell
+
+###### The function perform the Eberhart and Russell stability analysis 
+##### Eberhart and Russell Model of stability, Crop Science 1966, 6:37-40
