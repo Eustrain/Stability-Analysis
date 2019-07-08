@@ -3,9 +3,9 @@
 
 
 #Example 1
-dat <- read.csv("dat.csv",head=T)
+dat <- read.csv("F-W.csv",head=T)
 head(dat)
-Tai("y", "geno", "env", "rep", dat)
+Tai(dat$Entry,dat$Env,dat$Rep,dat$y,"y")
 ##Example 2
 
 ##Tai(dat$entry,dat$env,dat$rep,dat$y,"Y")
