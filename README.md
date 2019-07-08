@@ -25,13 +25,13 @@
 ## Function Eberhart and Russell
 
 ###### The function perform the Eberhart and Russell stability analysis 
-##### Eberhart and Russell Model of stability, Crop Science 1966, 6:37-40
+###### Eberhart and Russell Model of stability, Crop Science 1966, 6:37-40
 
 ## Function  Finlay and Wilkinson's Model
-##### The function perform the Regression Analysis of Stability (Finlay and Wilkinson's Model)
+###### The function perform the Regression Analysis of Stability (Finlay and Wilkinson's Model)
 
 ## Fuction Tai
-#### The fucntion tai perform the Tai Analysis of stability
+##### The fucntion tai perform the Tai Analysis of stability
 
 ## Wricke's Model: Ecovalence
-##### The function Wricke's Model perform the Wricke's Model Analysis of stability
+###### The function Wricke's Model perform the Wricke's Model Analysis of stability
