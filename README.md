@@ -31,4 +31,4 @@
 ##### The function perform the Regression Analysis of Stability (Finlay and Wilkinson's Model)
 
 ## Fuction Tai
-####The fucntion tai perform the Tai Analisys of stability
+#### The fucntion tai perform the Tai Analisys of stability
