@@ -31,4 +31,7 @@
 ##### The function perform the Regression Analysis of Stability (Finlay and Wilkinson's Model)
 
 ## Fuction Tai
-#### The fucntion tai perform the Tai Analisys of stability
+#### The fucntion tai perform the Tai Analysis of stability
+
+## Wricke's Model: Ecovalence
+##### The function Wricke's Model perform the Wricke's Model Analysis of stability
