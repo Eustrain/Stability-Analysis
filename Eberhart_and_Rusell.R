@@ -16,7 +16,7 @@ attach(dat)
 ige<- E_R(Env,Rep,Entry,y,"y")
 ige$Stability
 
-
+ige$IGE
 E_R <- function(Env,Rep,Entry,y,trait){
 
 ################# Begin

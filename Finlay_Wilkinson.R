@@ -1,12 +1,10 @@
-### Regression Analysis of Stability 
-### (Finlay and Wilkinson's Model)
+# Regression Analysis of Stability 
+# (Finlay and Wilkinson's Model)
 ###
-###Finlay and Wilkinson defined that b = 1.0 indicates
-###average ','stability" , b < 1.0 means " below average stability" and b > 
-###1,0 suggests "above average stability". 
-
-
-
+#Finlay and Wilkinson defined that b = 1.0 indicates
+#average ','stability" , b < 1.0 means " below average stability" and b > 
+#1,0 suggests "above average stability". 
+#fw(Entry,Enviroment,Rep,y,"Name our variable")
 
 dat <- read.csv("F-W.csv",header = T)
 
@@ -16,9 +14,9 @@ head(dat)
 
 
 
-f-W<- fw(dat$Entry,dat$Env,dat$Rep,dat$y,"Yield")
+f<- fw(dat$Entry,dat$Env,dat$Rep,dat$y,"Yield")
 
-
+f
 
 fw<- function(Entry,Env,Rep,y,trait){
 
